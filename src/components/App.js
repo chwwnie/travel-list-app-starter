@@ -16,11 +16,12 @@ function Form() {
   }
 
   const [description, setDescription] = useState("");
+  const [quantity, setQuantity] = useState(1)
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need to pack?</h3>
-      <select>
+      <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
@@ -33,12 +34,22 @@ function Form() {
   );
 }
 
+function Item ({item}) {
+  return (
+    <li>
+      <span style={item.packed ? { textDecoration: "line-through"} : {}}>
+        {item.quantity} {item.description}
+      </span>
+    </li>
+  )
+}
+
 function PackingList() {
   return (
     <div className="list">
       <ul>
         {initialItems.map((item) => (
-          <li>{item.description}</li>
+          <Item item={item} key={item.id}></Item>
         ))}
       </ul>
     </div>
